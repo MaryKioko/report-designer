@@ -98,9 +98,8 @@ class App extends Component {
                   </div>
                   </div>
               </li>
-              <li className="list-group-item hidden">Annually</li>
+              <li>className</li>
             </ul>
-
         </div>
         <div className="col-9" id="action_panel"></div>
       </div>
