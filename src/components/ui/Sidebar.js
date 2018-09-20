@@ -3,9 +3,33 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import $ from 'jquery';
 import React, { Component } from 'react';
-//import './App.css';
-class App extends Component {
+import './Props';
+const headers ={
+  headers:{
+    'Authorization': `Basic ${btoa('MaryKK:33465412mM')}`
+  }
+  }
 
+  
+class Sidebar extends Component {
+  constructor(){
+    super();
+    this.state={
+        isLoading: false,
+        data: [],
+        filterText: ''
+    }
+}
+componentDidMount(){
+ fetch('http://197.136.81.99:8082/test/api/organisationUnitLevels/?fields=:all&format=json&page_size=50', headers
+  ).then( (Response)=> Response.json() )
+  .then(( findresponse) => {
+      console.log(findresponse.organisationUnitLevels )
+      this.setState({
+          data:findresponse.organisationUnitLevels,
+      })
+  })
+}
 
   handleClick = (reference, e) => {
 
@@ -17,95 +41,104 @@ class App extends Component {
 
   }
 
-   
   render() {
+    const { isLoading } = this.state;
+    
     return (
-     <div className="container">
+      <div className="container">
       <div className="row">
-        <div className="col-3">
-          <ul className="list-group">
-              <li className="list-group-item" id="Couuntry-tab" onClick={(e) => this.handleClick("#weekly-tab", e)}>Weekly</li>
-              <li className="list-group-item hidden" id="weekly-tab-options">
-                <div className="row container">
-                <div className="col form-check">
-                  <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"/>
-                  <label className="form-check-label">Kenya</label>
-                  </div>
-                  <div className="col form-check">
-                    <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"/>
-                    <label className="form-check-label">Uganda</label>
-                  </div>
-                  
-                  <div className="col form-check">
-                  <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"/>
-                  <label className="form-check-label">Nigeria</label>
-                  </div>
-                  </div>
-              </li>
-              <li className="list-group-item" id="County" onClick={(e) => this.handleClick("#quarterly-tab", e)}>Quarterly</li>
-              <li className="list-group-item hidden" id="quarterly-tab-options">
-                <div className="row container">
-                <div className="col form-check">
-                  <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"/>
-                  <label className="form-check-label">Nairobi</label>
-                  </div>
-                  <div className="col form-check">
-                    <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"/>
-                    <label className="form-check-label">Makueni</label>
-                  </div>
-                  <br/>
-                  <div className="col form-check">
-                  <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"/>
-                  <label className="form-check-label">Kakamega</label>
-                  </div>
-                  </div>
-              </li>
-              <li className="list-group-item" id="Sub-County" onClick={(e) => this.handleClick("#semi-annually-tab", e)}>Semi-Annually</li>
-                <li className="list-group-item hidden" id="semi-annually-tab-options">
-                <div className="row container">
-                <div className="col form-check">
-                  <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"/>
-                  <label className="form-check-label">Kibwezi North</label>
-                  </div>
-                  <br/>
-                  <div className="col form-check">
-                    <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"/>
-                    <label className="form-check-label">Dangoreti South</label>
-                  </div>
-                  <br/>
-                  </div>
-              </li>
-              
-              <li className="list-group-item" id="annually-tab" onClick={(e) => this.handleClick("#annually-tab", e)} >Annually</li>
-              <li className="list-group-item hidden" id="annually-tab-options">
-                <div className="row container">
-                <div className="col form-check">
-                  <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"/>
-                  <label className="form-check-label">2018</label>
-                  </div>
-                  <div className="col form-check">
-                    <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"/>
-                    <label className="form-check-label">2017</label>
-                  </div>
-                  <br/>
-                  <div className="col form-check">
-                  <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"/>
-                  <label className="form-check-label">2016</label>
-                  </div>
-                  <div className="col form-check">
-                    <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"/>
-                    <label className="form-check-label">2015</label>
-                  </div>
-                  </div>
-              </li>
-              <li>className</li>
-            </ul>
-        </div>
-        <div className="col-9" id="action_panel"></div>
-      </div>
+        <div className="col-4">
+        <div class="container">
+  
+      <div class="card">
+      <div class="card-body">
+      <div class="panel-group">
+      <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" href="#collapse1">Data</a>
+      </h4>
+    </div>
+    
+    <div id="collapse1" class="panel-collapse collapse">
+    <div class="list-group">
+     {    this.state.data.map( (dynamicData,key) =>
+         <p>{dynamicData.name}</p> 
+    )}
+   </div>
+    
+    </div>
+    
+    
+  </div>
+</div>
+
+ <div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="second" href="#collapse2">Period</a>
+      </h4>
+    </div>
+    <div id="collapse2" class="panel-collapse collapse">
+    <div class="list-group" multiple>
+    {    this.state.data.map( (dynamicData,key) =>
+         <p>{dynamicData.name}</p> 
+    )}
+</div>
+      
+    </div>
+    
+  </div>
+</div>
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="third" href="#collapse3">Org Units</a>
+      </h4>
+    </div>
+    <div id="collapse3" class="panel-collapse collapse">
+    <div class="list-group" multiple>
+    {    this.state.data.map( (dynamicData,key) =>
+         <p>{dynamicData.name}</p> 
+    )}
+    
+</div>
+      
+    </div>
+    
+  </div>
+</div>
+
+</div>
+</div> 
+</div>
+    </div>
+    
+    <div className="col-8" id="action_panel">
+      <div class="container">
+      <div class="card">
+      <div class="card-body">
+    <h3> selected Items</h3>
+  <div class="panel panel-default">
+    <div class="panel-body">
      </div>
+  </div>
+  </div>
+  </div>
+  </div>
+      </div>
+      </div>
+      </div>
+    
+
+
+
     );
   }
 }
 
-export default App;
+
+
+ export default Sidebar; 

@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Card, CardBody,Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
-
+const headers ={
+  headers:{
+    'Authorization': `Basic ${btoa('MaryKK:33465412mM')}`
+  }
+  }
 class Dropdowns extends Component {
   constructor(props) {
     super(props);
@@ -10,7 +14,18 @@ class Dropdowns extends Component {
       dropdownOpen: new Array(6).fill(false),
     };
   }
-
+  componentDidMount(){
+    fetch('http://197.136.81.99:8082/test/api/organisationUnits', headers
+    ).then( (response)=> response.json() )
+    .then(( findresponse) => {
+        console.log(findresponse.organisationUnits )
+        this.setState({
+            data:findresponse.organisationUnits,
+        })
+    })
+  
+  
+  }
   toggle(i) {
     const newArray = this.state.dropdownOpen.map((element, index) => {
       return (index === i ? !element : false);
@@ -31,13 +46,16 @@ class Dropdowns extends Component {
                   this.toggle(0);
                 }}>
                   <DropdownToggle caret>
-                    Country
+                    Contry
                   </DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem header>Kenya</DropdownItem>
-                    <DropdownItem disabled>Tanzania</DropdownItem>
+                    {/* <DropdownItem header>Kenya</DropdownItem>
+                    <DropdownItem disabled>Tanzania</DropdownItem> */}
+                     {    this.state.data.map( (dynamicData,key) =>
+                    <p>{dynamicData.name}</p> 
+                     )}
                     </DropdownMenu>
-                </Dropdown>
+                </Dropdown>u
               </CardBody>
             </Card>
             <Card divider />
